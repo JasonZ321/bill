@@ -2,13 +2,20 @@ import React, { Component } from 'react';
 import TemplateSection from '../section/template_section';
 import NewSectionPopup from './new_section_popup';
 import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+import { createTemplate } from '../../../../imports/api/template_api';
+import { getIdByURL } from '../../../../imports/utils/common';
+import { browserHistory } from 'react-router';
 
 class NewTemplate extends Component {
 	constructor(props) {
 		super(props);
+		const url = props.location.pathname;
+		const companyId = getIdByURL(url, '/company/');
 		this.state = {
 			sections: [],
-			popupOpen: false
+			popupOpen: false,
+			companyId
 		}
 	}
 	renderSections() {
@@ -33,17 +40,46 @@ class NewTemplate extends Component {
 		});
 		this.closePopup();
 	}
-	renderAddSectionButton() {
+	createNewTemplate() {
+		const {sections, companyId} = this.state;
+		const name = this.refs.name.getValue();
+		const template = {
+			name,
+			sections,
+			companyId
+		}
+		createTemplate(template, () => {
+			const url = `/company/${companyId}/template`;
+			browserHistory.push(url);
+		});
+	}
+	renderHeaderButton() {
 		return <div style={{'textAlign': 'right', 'marginTop': 20, 'marginRight': 20}}>
 			<RaisedButton onClick={this.openPopup.bind(this)} primary={true} label='添加区域'/>
 			<NewSectionPopup isOpen={this.state.popupOpen} onCancel={this.closePopup.bind(this)} addNewSection={this.addNewSection.bind(this)} />
+			<div style={{'textAlign': 'center', 'marginTop': '20'}} >
+				<TextField hintText="新模板名" ref='name'/>
+			</div>
+		</div>
+	}
+	cancel() {
+		const url = `/company/${companyId}/template`;
+		browserHistory.push(url);
+	}
+	renderFooterButton() {
+		return <div style={{'textAlign': 'bottom', 'marginTop': 20, 'marginRight': 20}}>
+			<RaisedButton onClick={this.createNewTemplate.bind(this)} primary={true} label='保存'/>
+			<RaisedButton onClick={this.cancel.bind(this)} secondary={true} label='取消'/>
 		</div>
 	}
 	render() {
 		return (
 			<div>
-				{this.renderAddSectionButton()}
-				{this.renderSections()}
+				{this.renderHeaderButton()}
+				<div>
+						{this.renderSections()}
+				</div>
+				{this.renderFooterButton()}
 			</div>
 		)
 	}

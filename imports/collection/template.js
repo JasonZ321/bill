@@ -6,7 +6,7 @@ Meteor.methods({
 			...template,
 			createdAt: new Date()
 		}
-		Template.schema.validate(data)
+		//Template.schema.validate(data)
 		return Template.insert(data)
 	},
 	'template.update':function(templateId, template) {
