@@ -6,6 +6,7 @@ import TextField from 'material-ui/TextField';
 import { createTemplate } from '../../../../imports/api/template_api';
 import { getIdByURL } from '../../../../imports/utils/common';
 import { browserHistory } from 'react-router';
+import Divider from 'material-ui/Divider';
 
 class NewTemplate extends Component {
 	constructor(props) {
@@ -57,13 +58,13 @@ class NewTemplate extends Component {
 		return <div style={{'textAlign': 'right', 'marginTop': 20, 'marginRight': 20}}>
 			<RaisedButton onClick={this.openPopup.bind(this)} primary={true} label='添加区域'/>
 			<NewSectionPopup isOpen={this.state.popupOpen} onCancel={this.closePopup.bind(this)} addNewSection={this.addNewSection.bind(this)} />
-			<div style={{'textAlign': 'center', 'marginTop': '20'}} >
+			<div style={{'textAlign': 'center'}} >
 				<TextField hintText="新模板名" ref='name'/>
 			</div>
 		</div>
 	}
 	cancel() {
-		const url = `/company/${companyId}/template`;
+		const url = `/company/${this.state.companyId}/template`;
 		browserHistory.push(url);
 	}
 	renderFooterButton() {
