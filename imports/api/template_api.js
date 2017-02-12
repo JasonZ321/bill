@@ -1,13 +1,26 @@
 import uuidV1 from 'uuid/v1'
 
 export function createTemplate(template, callback) {
-	debugger
 	Meteor.call("template.insert", template, function(error, result){
 		if(error){
 			console.log("error", error);
 		}
 		if(result){
 			console.log("template %s was created.", result);
+		}
+		if(callback) {
+			callback(error, result);
+		}
+	});
+}
+
+export function updateTemplate(templateId, template, callback) {
+	Meteor.call("template.update", templateId, template, function(error, result){
+		if(error){
+			console.log("error", error);
+		}
+		if(result){
+			console.log("template %s was updated.", result);
 		}
 		if(callback) {
 			callback(error, result);

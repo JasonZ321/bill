@@ -8,7 +8,7 @@ export default class TemplateSection extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			fields: [],
+			fields: this.props.section.fields,
 			popupOpen: false
 		}
 	}
@@ -29,10 +29,10 @@ export default class TemplateSection extends Component {
 	}
 	addNewField(name, type) {
 		const newField = {name, type};
+		this.props.addFieldToTemplate(this.props.section, newField);
 		this.setState({
 			fields: [...this.state.fields, newField]
 		});
-		this.props.section.fields = this.state.fields;
 		this.closePopup();
 	}
 	render() {

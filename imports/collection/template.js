@@ -11,9 +11,9 @@ Meteor.methods({
 	},
 	'template.update':function(templateId, template) {
 		if(templateId) {
-			Template.update(templateId, {
+			return Template.update(templateId, {
 				$set: { ...template}
-			})
+			});
 		}
 	}
 });
