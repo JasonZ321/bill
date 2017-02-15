@@ -22,7 +22,7 @@ class TemplateDetail extends Component {
 	}
 	renderSections() {
 		return this.state.sections.map( section => {
-			return <TemplateSection section={section} addFieldToTemplate={this.addFieldToTemplate.bind(this)}/>
+			return <TemplateSection key={section.name} section={section} updateSection={this.updateSection.bind(this)}/>
 		});
 	}
 	openPopup() {
@@ -42,10 +42,11 @@ class TemplateDetail extends Component {
 		});
 		this.closePopup();
 	}
-	addFieldToTemplate(sectionForUpdate, field) {
+	updateSection(sectionForUpdate) {
+		debugger;
 		const updatedSections = this.state.sections.map( section => {
 			if(section.name === sectionForUpdate.name) {
-				section.fields = [...section.fields, field];
+				return sectionForUpdate;
 			}
 			return section;
 		});

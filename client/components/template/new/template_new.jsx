@@ -20,9 +20,8 @@ class NewTemplate extends Component {
 		}
 	}
 	addFieldToTemplate(sectionForUpdate, field) {
-		debugger;
 		const updatedSections = this.state.sections.map( section => {
-			if(section._id == sectionForUpdate._id) {
+			if(section.name === sectionForUpdate.name) {
 				section.fields = [...section.fields, field];
 			}
 			return section;
@@ -32,9 +31,8 @@ class NewTemplate extends Component {
 		});
 	}
 	renderSections() {
-		debugger;
 		return this.state.sections.map( section => {
-			return <TemplateSection section={section} addFieldToTemplate={this.addFieldToTemplate.bind(this)}/>
+			return <TemplateSection key={section.name} section={section} addFieldToTemplate={this.addFieldToTemplate.bind(this)}/>
 		});
 	}
 	openPopup() {
@@ -56,7 +54,6 @@ class NewTemplate extends Component {
 	}
 	createNewTemplate() {
 		const {sections, companyId} = this.state;
-		debugger;
 		const name = this.refs.name.getValue();
 		const template = {
 			name,

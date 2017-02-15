@@ -29,20 +29,20 @@ const styles = {
 
   }
 }
-export default class NewFieldPopup extends Component {
+export default class EditFieldPopup extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			type: 'text_field',
+			type: this.props.field.type,
+			name: this.props.field.name
 		};
 	}
 	handleChange(event, index, type){
 		this.setState({type});
 	}
-	createNewField() {
+	updateField() {
 		const fieldName = this.refs.name.getValue();
-    this.setState({type: 'text_field'});
-		this.props.addNewField({name: fieldName, type: this.state.type});
+		this.props.updateField({name: fieldName, type: this.state.type});
 	}
 	renderSelections() {
 		return <div>
@@ -63,14 +63,14 @@ export default class NewFieldPopup extends Component {
   }
 	renderFooterButton() {
 		return <div>
-				<RaisedButton onClick={this.createNewField.bind(this)} label="创建" primary={true} />
+				<RaisedButton onClick={this.updateField.bind(this)} label="更新" primary={true} />
 				<RaisedButton onClick={this.cancel.bind(this)} label="取消" secondary={true} />
 		</div>
 	}
 	render() {
 		return <div>
 			<Modal isOpen={this.props.isOpen} contentLabel="添加" style={styles}>
-				<TextField hintText="名字" ref="name" /> <br />
+				<TextField ref="name" defaultValue={this.state.name}/> <br />
 				{this.renderSelections()}
 				{this.renderFooterButton()}
 			</Modal>

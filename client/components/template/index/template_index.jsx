@@ -33,7 +33,6 @@ class TemplateIndex extends Component {
 	}
 	renderTemplates() {
 		const {templates, companyId} = this.props;
-    debugger;
     if(templates && templates.length >0) {
       return (
         <div style={styles.root}>

@@ -12,9 +12,33 @@ export default class TemplateSection extends Component {
 			popupOpen: false
 		}
 	}
+	updateField(newField, oldField) {
+		debugger;
+		const fields = this.state.fields.map(field => {
+			if(field.name === oldField.name) {
+				return newField
+			} else {
+				return field;
+			}
+		});
+		this.setState({fields});
+	}
+	deleteField(fieldForDelete) {
+		debugger;
+		const fields = this.state.fields.filter(field => field.name !== fieldForDelete.name);
+		this.setState({fields});
+		const newSection = {
+			name: this.props.section.name,
+			fields
+		}
+		this.props.updateSection(newSection);
+	}
 	renderFields() {
+		const self = this;
 		return this.state.fields.map( field => {
-			return <TemplateField field={field} />
+			return <TemplateField field={field} key={field.name}
+														onFieldUpdate={ (newField) => { self.updateField(newField, field)} }
+														onFieldDelete={ () => { self.deleteField(field) }} />
 		});
 	}
 	openPopup() {
@@ -27,11 +51,16 @@ export default class TemplateSection extends Component {
 			popupOpen: false
 		})
 	}
-	addNewField(name, type) {
+	addNewField({name, type}) {
 		const newField = {name, type};
-		this.props.addFieldToTemplate(this.props.section, newField);
+		const newFieldList = [...this.state.fields, newField];
+		const newSection = {
+			name: this.props.section.name,
+			fields: newFieldList
+		}
+		this.props.updateSection(newSection);
 		this.setState({
-			fields: [...this.state.fields, newField]
+			fields: newFieldList
 		});
 		this.closePopup();
 	}
