@@ -42,6 +42,21 @@ export function createTemplateWithName(name, callback) {
 	});
 }
 
+export function setDefaultTemplate(companyId, defaultTemplateId) {
+	debugger;
+	Meteor.call('company.update',companyId, {defaultTemplateId}, function(error, result) {
+		if(error) {
+			console.error(error);
+		}
+		if(result) {
+			console.log("company default template was set.", defaultTemplateId);
+		}
+		if(callback) {
+			callback(error, result);
+		}
+	})
+}
+
 // export function addSectionToTemplate(template, name, callback) {
 // 	const section = {
 // 		id: uuidV1(),

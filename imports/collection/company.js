@@ -8,6 +8,14 @@ Meteor.methods({
 		 }
 		 Company.schema.validate(data)
 		 return Company.insert(data)
+	},
+	'company.update':function(companyId, company) {
+		debugger;
+		if(companyId) {
+			return Company.update(companyId, {
+				$set: { ...company}
+			});
+		}
 	}
 });
 
@@ -16,5 +24,6 @@ Company.schema = new SimpleSchema({
 	name: {type:String},
 	avatarURL: {type:String, optional: true},
 	email: {type:String},
-	createdAt: {type: Date}
+	createdAt: {type: Date},
+	defaultTemplateId: {type:String, optional: true}
 });

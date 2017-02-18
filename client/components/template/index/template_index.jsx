@@ -23,7 +23,7 @@ const styles = {
 
 class TemplateIndex extends Component {
 	navigateToAddPage() {
-		const url = `/company/${this.props.companyId}/newtemplate`;
+		const url = `/company/${this.props.company._id}/newtemplate`;
 		browserHistory.push(url);
 	}
 	renderAddButton() {
@@ -32,14 +32,17 @@ class TemplateIndex extends Component {
 		</div>
 	}
 	renderTemplates() {
-		const {templates, companyId} = this.props;
+		const {templates, company} = this.props;
     if(templates && templates.length >0) {
       return (
         <div style={styles.root}>
           <GridList style={styles.gridList} cols={2.2}>
             {
               templates.map((template) => {
-                  return <TemplateIndexCell key={template._id} template={template} />
+                  if(template._id === company.defaultTemplateId) {
+                    return <TemplateIndexCell key={template._id} template={template} isDefault={true}/>
+                  }
+                  return <TemplateIndexCell key={template._id} template={template} isDefault={false}/>
                 }
               )
             }

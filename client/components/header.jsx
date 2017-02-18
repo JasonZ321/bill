@@ -38,14 +38,14 @@ class Header extends Component {
 		const companyId = this.props.company._id;
 		const mainURL =`/company/${companyId}`;
 		const templateURL = `/company/${companyId}/template`;
-		const newbillURL = `/company/${companyId}/newbill`;
+		const sheetURL = `/company/${companyId}/sheet`;
 		const analyseURL = `/company/${companyId}/analyse`;
 
 		return (
 			<div>
 				<Menu listStyle={flexContainer}>
 					<MenuItem
-            containerElement={<Link to={newbillURL} />}
+            containerElement={<Link to={sheetURL} />}
             primaryText="开具票据"
           />
           <MenuItem
